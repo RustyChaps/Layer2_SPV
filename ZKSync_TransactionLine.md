@@ -1,10 +1,8 @@
-> transaction inclusion proof
-
-
-
+# <h1 align="center"><img src="https://placekitten.com/300/150"/></h1>
 code :
 
 src/api_server/rpc_server/rpc_trait.rs
+
 ```rs
 #[rpc]
 pub trait Rpc {
@@ -21,6 +19,7 @@ pub trait Rpc {
 ```
 
 core/lib/type/src/tx/zksync_tx.rs
+
 ```rs
 
 /// Represents transaction with the corresponding Ethereum signature and the message.
@@ -66,7 +65,9 @@ impl ZkSyncTx {
     }
 
 ```
+
 core/lib/types/src/tx/trasfer.rs
+
 ```rs
 /// `Transfer` transaction performs a move of funds from one zkSync account to another.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -100,6 +101,7 @@ pub struct Transfer {
 ```
 
 /core/lib/types/src/operations/transfer_op.rs
+
 ```rs
 /// Transfer operation. For details, see the documentation of [`ZkSyncOp`](./operations/enum.ZkSyncOp.html).
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -133,8 +135,8 @@ fn parse_pub_data(
     ...
 ```
 
-
 src/api_server/rpc_server/rpc_impl.rs
+
 ```rs
     pub async fn _impl_tx_submit(
         self,
@@ -152,7 +154,9 @@ src/api_server/rpc_server/rpc_impl.rs
         result
     }
 ```
+
 src/api_server/tx_sender.rs
+
 ```rs
     pub fn new(
         connection_pool: ConnectionPool,
@@ -253,7 +257,9 @@ src/api_server/tx_sender.rs
             .map_err(SubmitError::TxAdd)?;
     }
 ```
+
 /core/bin/zksync_api/src/signature_checker.rs
+
 ```rs
 /// `TxVariant` is used to form a verify request. It is possible to wrap
 /// either a single transaction, or the transaction batch.
@@ -274,8 +280,8 @@ pub enum TxVariant {
 pub struct VerifiedTx(TxVariant);
 ```
 
-
 src/core_api_client.rs
+
 ```
     /// Sends a new transaction to the Core mempool.
     pub async fn send_tx(&self, tx: SignedZkSyncTx) -> anyhow::Result<Result<(), TxAddError>> {
@@ -283,17 +289,18 @@ src/core_api_client.rs
         self.post(&endpoint, tx).await
     }
 ```
+
 src/apiserver/rest/v1/transactions.rs
+
 ```
     async fn send_tx(_tx: Json<SignedZkSyncTx>) -> Json<Result<(), ()>> {
         Json(Ok(()))
     }
 ```
 
-
 next is core_api_client.rs. what about tx_sender
 
-- pre tx_sender(offchain):https://zksync.io/api/sdk/js/tutorial.html#checking-zksync-account-balance
+- pre tx_sender(offchain):<https://zksync.io/api/sdk/js/tutorial.html#checking-zksync-account-balance>
 
 ```ts
 const ethWallet2 = ethers.Wallet.fromMnemonic(MNEMONIC2).connect(ethersProvider);
@@ -309,7 +316,8 @@ const transfer = await syncWallet.syncTransfer({
 });
 ```
 
-> link： https://github.com/matter-labs/zksync/tree/master/sdk/zksync.js
+> link： <https://github.com/matter-labs/zksync/tree/master/sdk/zksync.js>
+
 ```ts
 async syncTransfer(transfer: {
         to: Address;
@@ -376,6 +384,7 @@ async getTransfer(transfer: {
 ```
 
 /src/signer.ts
+
 ```ts
 async signSyncTransfer(transfer: {
         accountId: number;
@@ -405,12 +414,11 @@ async signSyncTransfer(transfer: {
     }
 ```
 
-
-
 ---
 ps:
 
 what is mean "match" in rust
+
 ```ts
 fn main() {
     let t = "abc";
